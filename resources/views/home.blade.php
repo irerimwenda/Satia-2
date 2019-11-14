@@ -17,6 +17,10 @@
                     You are logged in!
                 </div>
             </div>
+
+            <div class="">
+                <dashboard-component></dashboard-component>
+            </div>
         </div>
     </div>
 </div>
