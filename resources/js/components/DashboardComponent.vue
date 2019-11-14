@@ -33,6 +33,11 @@
                             </div>
                         </form>
                     </div>
+
+                    <div class="row" v-for="link in links" :key="link.id">
+                        LINK TYPE: {{link.link_type}}
+                        LINK: {{link.link}}
+                    </div>
                 </div>
             </div>
         </div>
