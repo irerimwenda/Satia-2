@@ -9,6 +9,14 @@ use App\Link;
 
 class LinkController extends Controller
 {
+
+    //Get Links
+    public function getLinks() {
+        $links = Link::all();
+
+        return response()->json($links, 201);
+    }
+    
     //Save Link
     public function saveLink(Request $request) {
         $user = auth('api')->user();
