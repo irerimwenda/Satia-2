@@ -49,6 +49,7 @@ import { Form, HasError, AlertError } from 'vform'
 
         data() {
             return {
+                links: {},
                 form: new Form({
                     link_type: '',
                     link: ''
@@ -67,6 +68,16 @@ import { Form, HasError, AlertError } from 'vform'
                     .catch(error => {
                         console.log('error')
                     })
+            },
+
+            getLinks() {
+                axios.get('api/get-links')
+                .then(response => {
+                    this.links = response.data
+                })
+                .catch(error => {
+                    console.log(error)
+                })
             }
         }
     }

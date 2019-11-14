@@ -1888,6 +1888,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      links: {},
       form: new vform__WEBPACK_IMPORTED_MODULE_0__["Form"]({
         link_type: '',
         link: ''
@@ -1903,6 +1904,15 @@ __webpack_require__.r(__webpack_exports__);
         console.log('link saved');
       })["catch"](function (error) {
         console.log('error');
+      });
+    },
+    getLinks: function getLinks() {
+      var _this = this;
+
+      axios.get('api/get-links').then(function (response) {
+        _this.links = response.data;
+      })["catch"](function (error) {
+        console.log(error);
       });
     }
   }
