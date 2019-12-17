@@ -24,6 +24,7 @@ class LinkController extends Controller
 
         //Validate
         $this->validate($request, [
+            'link_type' => 'required',
             'link' => 'required',
         ]);
 

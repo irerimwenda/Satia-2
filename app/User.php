@@ -39,6 +39,6 @@ class User extends Authenticatable
     ];
 
     public function link() {
-        return $this->hasMany('App\Link');
+        return $this->hasOne('App\Link');
     }
 }

@@ -10,6 +10,30 @@ window.Vue = require('vue');
 
 import Vue from 'vue'
 
+import SweetModal from 'sweet-modal-vue/src/plugin.js'
+Vue.use(SweetModal)
+
+import Swal from 'sweetalert2'
+window.Swal = Swal;
+
+let Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000
+})
+
+window.Toast = Toast;
+
+Vue.filter('capitalize', function (value) {
+    if (!value) return ''
+    value = value.toString()
+    return value.charAt(0).toUpperCase() + value.slice(1)
+})
+
+let Fire = new Vue();
+window.Fire = Fire;
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

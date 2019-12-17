@@ -8,7 +8,9 @@ class Link extends Model
 {
     protected $fillable = ['user_id', 'link_type', 'link'];
 
+    public $with = ['user'];
+
     public function user() {
-        return $this->belongsToMany('App\User');
+        return $this->belongsTo('App\User');
     }
 }
