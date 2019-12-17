@@ -1,5 +1,13 @@
 @import url(https://fonts.googleapis.com/css?family=Nunito);@charset "UTF-8";
 
+.red {
+  color: #e3342f;
+}
+
+.indigo {
+  color: #6574cd;
+}
+
 /*!
  * Bootstrap v4.3.1 (https://getbootstrap.com/)
  * Copyright 2011-2019 The Bootstrap Authors
@@ -11098,5 +11106,23 @@ a.text-dark:focus {
     color: inherit;
     border-color: #dee2e6;
   }
+}
+
+.align-middle-custom {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+          justify-content: center;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.start-adding-link {
+  background-color: #E5E7E9;
+  padding: 6px;
 }
 

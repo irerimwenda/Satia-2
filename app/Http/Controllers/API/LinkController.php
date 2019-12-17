@@ -37,4 +37,12 @@ class LinkController extends Controller
 
         return response()->json($link, 201);
     }
+
+    //Delete Link
+    public function deleteLink($id) {
+        $link = Link::findOrFail($id);
+        $deleted = $link->delete();
+
+        return response()->json($deleted, 200);
+    }
 }

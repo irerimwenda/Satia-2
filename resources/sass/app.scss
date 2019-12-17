@@ -6,3 +6,21 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+
+//custom
+.align-middle-custom {
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.start-adding-link {
+    background-color: #E5E7E9;
+    padding: 6px;
+}
