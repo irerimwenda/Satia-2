@@ -38276,7 +38276,7 @@ var render = function() {
                 [
                   _vm._m(0),
                   _vm._v(" "),
-                  _c("div", { staticClass: "row form-group" }, [
+                  _c("div", { staticClass: "row form-group col-md-6" }, [
                     _c("div", { staticClass: "form-group" }, [
                       _c("label", { attrs: { for: "link" } }, [_vm._v("Link")]),
                       _vm._v(" "),
@@ -38361,7 +38361,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row form-group" }, [
+    return _c("div", { staticClass: "row form-group col-md-6" }, [
       _c("div", { staticClass: "form-group" }, [
         _c("button", { staticClass: "btn btn-success btn-block" }, [
           _vm._v("Add Link")
@@ -50687,8 +50687,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! F:\Projects\Vue.Js\satia-2\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! F:\Projects\Vue.Js\satia-2\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /media/brian/BREEZY/Projects/Vue/Satia-2/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /media/brian/BREEZY/Projects/Vue/Satia-2/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -19,14 +19,14 @@
                                 </div>
                             </div>
 
-                            <div class="row form-group">
+                            <div class="row form-group col-md-6">
                                 <div class="form-group">
                                     <label for="link">Link</label>
                                     <input class="form-control" v-model="form.link" type="text" name="link" id="link">
                                 </div>
                             </div>
 
-                            <div class="row form-group">
+                            <div class="row form-group col-md-6">
                                 <div class="form-group">
                                     <button class="btn btn-success btn-block">Add Link</button>
                                 </div>
