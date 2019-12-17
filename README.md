@@ -5,7 +5,7 @@ Simple web app to add portofolio links. Made with vue.js and Laravel.
 ### Sample Screenshots
 Here are sample screenshots accomplished from the task.
 
-![No Link Added](https://github.com/irerimwenda/Satia-Challenge/tree/master/public/img/default.png)
+![No Link Added](https://github.com/irerimwenda/Satia-Challenge/raw/master/public/img/default.png)
 
 ![Add Link](https://github.com/irerimwenda/Satia-Challenge/tree/master/public/img/add-link.png)
 
