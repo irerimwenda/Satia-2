@@ -19,7 +19,9 @@
             </div> --}}
 
             <div class="">
-                <dashboard-component></dashboard-component>
+                <dashboard-component
+                :auth="{{$auth}}">
+                </dashboard-component>
             </div>
         </div>
     </div>

@@ -10,6 +10,11 @@ window.Vue = require('vue');
 
 import Vue from 'vue'
 
+import { Form, HasError, AlertError } from 'vform';
+window.Form = Form;
+Vue.component(HasError.name, HasError)
+Vue.component(AlertError.name, AlertError)
+
 import SweetModal from 'sweet-modal-vue/src/plugin.js'
 Vue.use(SweetModal)
 

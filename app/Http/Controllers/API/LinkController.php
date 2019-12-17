@@ -38,6 +38,27 @@ class LinkController extends Controller
         return response()->json($link, 201);
     }
 
+    //Update Link
+    public function updateLink(Request $request, $id) {
+        $user = auth('api')->user();
+        $link = Link::findOrFail($id);
+
+        //Validate
+        $this->validate($request, [
+            'link_type' => 'required',
+            'link' => 'required',
+        ]);
+
+        //return response()->json($request->all());
+        $updated = $link->update([
+            'user_id' => $user->id,
+            'link_type' => $request->link_type,
+            'link' => $request->link,
+        ]);
+
+        return response()->json($updated, 201);
+    }
+
     //Delete Link
     public function deleteLink($id) {
         $link = Link::findOrFail($id);

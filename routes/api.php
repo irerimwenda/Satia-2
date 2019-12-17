@@ -20,3 +20,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('save-link', 'API\LinkController@saveLink');
 Route::get('get-links', 'API\LinkController@getLinks');
 Route::delete('delete-link/{id}', 'API\LinkController@deleteLink');
+Route::put('update-link/{id}', 'API\LinkController@updateLink');

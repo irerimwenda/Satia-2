@@ -25,7 +25,10 @@
                                         <h6 class="added-by mt-1">Added by : {{link.user.name}}</h6>
                                     </div>
 
-                                    <div class="col-md-2 align-middle-custom">
+                                    <div class="col-md-2 align-middle-custom" v-if="link.user.id === auth">
+                                        <a class="pointer" @click="editLink(link)">
+                                            <h5><i class="fa fa-pencil pr-3 indigo"></i></h5>
+                                        </a>
                                         <a class="pointer" @click="deleteLink(link.id)">
                                             <h5><i class="fa fa-trash red"></i></h5>
                                         </a>
@@ -45,10 +48,11 @@
         <!--Add Website Link Modal-->
             <sweet-modal ref="addLinkModal" overlay-theme="dark">
                 <template slot="title">
-                    <h4 class="mt-4">Add a Website Link</h4>
+                    <h4 class="mt-4" v-if="editmode">Update Website Link</h4>
+                    <h4 class="mt-4" v-else>Add a Website Link</h4>
                 </template>
                  <div class="col-md-12">
-                     <form @submit.prevent="saveLink()">
+                     <form @submit.prevent="editmode ? updateLink() : saveLink()">
                         <div class="row">
                             <div class="form-group col-md-12">
                                 <label for="">Website</label>
@@ -76,7 +80,8 @@
 
                         <div class="row">
                             <div class="form-group col-md-4 mx-auto">
-                                <button class="btn btn-success btn-block">Add Link</button>
+                                <button class="btn btn-info btn-block white" v-if="editmode">Update Link</button>
+                                <button class="btn btn-success btn-block" v-else>Add Link</button>
                             </div>
                         </div>
                     </form>
@@ -94,8 +99,12 @@ import { Form, HasError, AlertError } from 'vform'
             Form
         },
 
+        props: ['auth'],
+
         data() {
             return {
+                editmode: false,
+                user: {},
                 links: {},
                 form: new Form({
                     id: '',
@@ -113,9 +122,28 @@ import { Form, HasError, AlertError } from 'vform'
             })
         },
         methods: {
+            getAuthUser() {
+                axios.get('/api/user')
+                    .then(response => {
+                        this.user = response.data
+                    })
+                    .catch(() => {
+
+                    })
+            },
+
             addLinkBox() {
+                this.form.reset()
+                this.editmode = false
                 this.$refs.addLinkModal.open()
                 this.form.clear()
+            },
+
+            editLink(link) {
+                this.editmode = true
+                this.form.reset()
+                this.$refs.addLinkModal.open()
+                this.form.fill(link)
             },
 
             saveLink() {
@@ -150,6 +178,30 @@ import { Form, HasError, AlertError } from 'vform'
                 .catch(error => {
                     //console.log(error)
                 })
+            },
+
+            updateLink() {
+                this.form.put('/api/update-link/' + this.form.id)
+                .then(response => {
+                        //console.log('link saved')
+                        this.$refs.addLinkModal.close()
+                        this.form.reset()
+                        Fire.$emit('refreshLinkAdded');
+
+                        Toast.fire({
+                            type: 'success',
+                            title: 'Link updated!'
+                        })
+                    })
+                    .catch(error => {
+                        //console.log('error')
+                        this.form.reset()
+
+                        Toast.fire({
+                            type: 'error',
+                            title: 'Ooops! Try again'
+                        })
+                    })
             },
 
             deleteLink(id) {

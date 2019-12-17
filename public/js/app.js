@@ -1928,13 +1928,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     Form: vform__WEBPACK_IMPORTED_MODULE_0__["Form"]
   },
+  props: ['auth'],
   data: function data() {
     return {
+      editmode: false,
+      user: {},
       links: {},
       form: new vform__WEBPACK_IMPORTED_MODULE_0__["Form"]({
         id: '',
@@ -1953,18 +1961,33 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   methods: {
+    getAuthUser: function getAuthUser() {
+      var _this2 = this;
+
+      axios.get('/api/user').then(function (response) {
+        _this2.user = response.data;
+      })["catch"](function () {});
+    },
     addLinkBox: function addLinkBox() {
+      this.form.reset();
+      this.editmode = false;
       this.$refs.addLinkModal.open();
       this.form.clear();
     },
+    editLink: function editLink(link) {
+      this.editmode = true;
+      this.form.reset();
+      this.$refs.addLinkModal.open();
+      this.form.fill(link);
+    },
     saveLink: function saveLink() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.form.post('/api/save-link').then(function (response) {
         //console.log('link saved')
-        _this2.$refs.addLinkModal.close();
+        _this3.$refs.addLinkModal.close();
 
-        _this2.form.reset();
+        _this3.form.reset();
 
         Fire.$emit('refreshLinkAdded');
         Toast.fire({
@@ -1973,7 +1996,7 @@ __webpack_require__.r(__webpack_exports__);
         });
       })["catch"](function (error) {
         //console.log('error')
-        _this2.form.reset();
+        _this3.form.reset();
 
         Toast.fire({
           type: 'error',
@@ -1982,11 +2005,35 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     getLinks: function getLinks() {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.get('api/get-links').then(function (response) {
-        _this3.links = response.data;
+        _this4.links = response.data;
       })["catch"](function (error) {//console.log(error)
+      });
+    },
+    updateLink: function updateLink() {
+      var _this5 = this;
+
+      this.form.put('/api/update-link/' + this.form.id).then(function (response) {
+        //console.log('link saved')
+        _this5.$refs.addLinkModal.close();
+
+        _this5.form.reset();
+
+        Fire.$emit('refreshLinkAdded');
+        Toast.fire({
+          type: 'success',
+          title: 'Link updated!'
+        });
+      })["catch"](function (error) {
+        //console.log('error')
+        _this5.form.reset();
+
+        Toast.fire({
+          type: 'error',
+          title: 'Ooops! Try again'
+        });
       });
     },
     deleteLink: function deleteLink(id) {
@@ -43530,24 +43577,39 @@ var render = function() {
                             ])
                           ]),
                           _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "col-md-2 align-middle-custom" },
-                            [
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "pointer",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.deleteLink(link.id)
-                                    }
-                                  }
-                                },
-                                [_vm._m(0, true)]
+                          link.user.id === _vm.auth
+                            ? _c(
+                                "div",
+                                { staticClass: "col-md-2 align-middle-custom" },
+                                [
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass: "pointer",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.editLink(link)
+                                        }
+                                      }
+                                    },
+                                    [_vm._m(0, true)]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass: "pointer",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.deleteLink(link.id)
+                                        }
+                                      }
+                                    },
+                                    [_vm._m(1, true)]
+                                  )
+                                ]
                               )
-                            ]
-                          )
+                            : _vm._e()
                         ]),
                         _vm._v(" "),
                         _c("hr")
@@ -43565,7 +43627,13 @@ var render = function() {
         { ref: "addLinkModal", attrs: { "overlay-theme": "dark" } },
         [
           _c("template", { slot: "title" }, [
-            _c("h4", { staticClass: "mt-4" }, [_vm._v("Add a Website Link")])
+            _vm.editmode
+              ? _c("h4", { staticClass: "mt-4" }, [
+                  _vm._v("Update Website Link")
+                ])
+              : _c("h4", { staticClass: "mt-4" }, [
+                  _vm._v("Add a Website Link")
+                ])
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-12" }, [
@@ -43575,7 +43643,7 @@ var render = function() {
                 on: {
                   submit: function($event) {
                     $event.preventDefault()
-                    return _vm.saveLink()
+                    _vm.editmode ? _vm.updateLink() : _vm.saveLink()
                   }
                 }
               },
@@ -43702,9 +43770,17 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "row" }, [
                   _c("div", { staticClass: "form-group col-md-4 mx-auto" }, [
-                    _c("button", { staticClass: "btn btn-success btn-block" }, [
-                      _vm._v("Add Link")
-                    ])
+                    _vm.editmode
+                      ? _c(
+                          "button",
+                          { staticClass: "btn btn-info btn-block white" },
+                          [_vm._v("Update Link")]
+                        )
+                      : _c(
+                          "button",
+                          { staticClass: "btn btn-success btn-block" },
+                          [_vm._v("Add Link")]
+                        )
                   ])
                 ])
               ]
@@ -43718,6 +43794,12 @@ var render = function() {
   )
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h5", [_c("i", { staticClass: "fa fa-pencil pr-3 indigo" })])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -55878,9 +55960,11 @@ module.exports = function(module) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var sweet_modal_vue_src_plugin_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sweet-modal-vue/src/plugin.js */ "./node_modules/sweet-modal-vue/src/plugin.js");
-/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
-/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var vform__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vform */ "./node_modules/vform/dist/vform.common.js");
+/* harmony import */ var vform__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vform__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var sweet_modal_vue_src_plugin_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sweet-modal-vue/src/plugin.js */ "./node_modules/sweet-modal-vue/src/plugin.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_3__);
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -55891,10 +55975,14 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(sweet_modal_vue_src_plugin_js__WEBPACK_IMPORTED_MODULE_1__["default"]);
+window.Form = vform__WEBPACK_IMPORTED_MODULE_1__["Form"];
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MODULE_1__["HasError"].name, vform__WEBPACK_IMPORTED_MODULE_1__["HasError"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component(vform__WEBPACK_IMPORTED_MODULE_1__["AlertError"].name, vform__WEBPACK_IMPORTED_MODULE_1__["AlertError"]);
 
-window.Swal = sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a;
-var Toast = sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.mixin({
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(sweet_modal_vue_src_plugin_js__WEBPACK_IMPORTED_MODULE_2__["default"]);
+
+window.Swal = sweetalert2__WEBPACK_IMPORTED_MODULE_3___default.a;
+var Toast = sweetalert2__WEBPACK_IMPORTED_MODULE_3___default.a.mixin({
   toast: true,
   position: 'top-end',
   showConfirmButton: false,
