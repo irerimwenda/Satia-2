@@ -9,8 +9,8 @@
                         <form @submit.prevent="saveLink()">
                             <div class="row">
                                 <div class="form-group col-md-6">
-                                    <label for="">Link</label>
-                                    <select name="link_type" id="link_type" class="form-control">
+                                    <label for="">Website</label>
+                                    <select name="link_type" id="link_type" class="form-control" v-model="form.link_type">
                                         <option value="github">Github</option>
                                         <option value="linkedin">Linkedin</option>
                                         <option value="twitter">Twitter</option>
@@ -35,8 +35,9 @@
                     </div>
 
                     <div class="row" v-for="link in links" :key="link.id">
-                        LINK TYPE: {{link.link_type}}
-                        LINK: {{link.link}}
+                        Website: {{link.link_type}}
+                        Link: {{link.link}}
+                        Added by :
                     </div>
                 </div>
             </div>
@@ -66,7 +67,7 @@ import { Form, HasError, AlertError } from 'vform'
         },
         methods: {
             saveLink() {
-                this.form.post('api/save-link')
+                this.form.post('/api/save-link')
                     .then(response => {
                         console.log('link saved')
                     })

@@ -1886,6 +1886,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -1905,7 +1906,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     saveLink: function saveLink() {
-      this.form.post('api/save-link').then(function (response) {
+      this.form.post('/api/save-link').then(function (response) {
         console.log('link saved');
       })["catch"](function (error) {
         console.log('error');
@@ -38274,7 +38275,63 @@ var render = function() {
                   }
                 },
                 [
-                  _vm._m(0),
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "form-group col-md-6" }, [
+                      _c("label", { attrs: { for: "" } }, [_vm._v("Website")]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.link_type,
+                              expression: "form.link_type"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { name: "link_type", id: "link_type" },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.form,
+                                "link_type",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _c("option", { attrs: { value: "github" } }, [
+                            _vm._v("Github")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "linkedin" } }, [
+                            _vm._v("Linkedin")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "twitter" } }, [
+                            _vm._v("Twitter")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "blog" } }, [
+                            _vm._v("Blog")
+                          ])
+                        ]
+                      )
+                    ])
+                  ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "row form-group col-md-6" }, [
                     _c("div", { staticClass: "form-group" }, [
@@ -38304,7 +38361,7 @@ var render = function() {
                     ])
                   ]),
                   _vm._v(" "),
-                  _vm._m(1)
+                  _vm._m(0)
                 ]
               )
             ]),
@@ -38312,11 +38369,11 @@ var render = function() {
             _vm._l(_vm.links, function(link) {
               return _c("div", { key: link.id, staticClass: "row" }, [
                 _vm._v(
-                  "\n                    LINK TYPE: " +
+                  "\n                    Website: " +
                     _vm._s(link.link_type) +
-                    "\n                    LINK: " +
+                    "\n                    Link: " +
                     _vm._s(link.link) +
-                    "\n                "
+                    "\n                    Added by :\n                "
                 )
               ])
             })
@@ -38328,35 +38385,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "form-group col-md-6" }, [
-        _c("label", { attrs: { for: "" } }, [_vm._v("Link")]),
-        _vm._v(" "),
-        _c(
-          "select",
-          {
-            staticClass: "form-control",
-            attrs: { name: "link_type", id: "link_type" }
-          },
-          [
-            _c("option", { attrs: { value: "github" } }, [_vm._v("Github")]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "linkedin" } }, [
-              _vm._v("Linkedin")
-            ]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "twitter" } }, [_vm._v("Twitter")]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "blog" } }, [_vm._v("Blog")])
-          ]
-        )
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
