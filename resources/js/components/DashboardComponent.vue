@@ -141,7 +141,7 @@ import { Form, HasError, AlertError } from 'vform'
 
             editLink(link) {
                 this.editmode = true
-                this.form.reset()
+                this.form.clear()
                 this.$refs.addLinkModal.open()
                 this.form.fill(link)
             },

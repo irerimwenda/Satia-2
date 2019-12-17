@@ -1976,7 +1976,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     editLink: function editLink(link) {
       this.editmode = true;
-      this.form.reset();
+      this.form.clear();
       this.$refs.addLinkModal.open();
       this.form.fill(link);
     },
